@@ -25,10 +25,10 @@
     - nginx
 
 
-- name: "Install apache"
-  hosts: apache
-  become: yes
-  tags:
-    - apache_install
-  roles:
-    - apache
+#- name: "Install apache"
+#  hosts: apache
+#  become: yes
+#  tags:
+#    - apache_install
+#  roles:
+#    - apache
