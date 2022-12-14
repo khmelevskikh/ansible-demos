@@ -1,0 +1,38 @@
+---
+# tasks file for modify_file
+
+- name: "Show current ip"
+  debug:
+    msg: "Hello, {{ username }}!"
+
+# - name: "Create file"
+#   shell:
+#     cmd: "touch neto.txt"
+#     chdir: "/home/vagrant"
+
+- name: "Create file 2"
+  file:
+    path: "{{ default_path }}/neto2.txt"
+    owner: vagrant
+    group: vagrant
+    mode: '0644'
+    state: touch
+
+- name: "Modify file"
+  shell:
+    cmd: "echo Hello > {{ default_path }}/neto2.txt"
+    chdir: "{{ default_path }}"
+
+- name: "Change file"
+  lineinfile:
+    path: "{{ default_path }}/neto2.txt"
+    regexp: '^Hello'
+    line: "Hi {{ username }}"
+
+- name: "Add Hello page."
+  template:
+    src: "hello.html.j2"
+    dest: "{{ default_path }}/hello.html"
+    owner: root
+    group: root
+    mode: 0644

@@ -1,0 +1,13 @@
+[webservers:children]
+nginx
+apache
+
+[dbservers]
+10.25.1.56
+10.25.1.57
+
+[nginx]
+192.168.0.10 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+[apache]
+192.168.0.12 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
