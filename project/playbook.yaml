@@ -1,24 +1,38 @@
 ---
 - name: "Install packages"
-  hosts: nginx
+  hosts: webservers
+  become: true
   gather_facts: false
-  become: yes
   tags:
-    - packages
+    - init
   tasks:
-  - name: "Show current ip"
-    debug:
-      msg: "Hello, Netology!"
+
+  - name: "Ensure that required packages are installed."
+    yum:
+      name:
+        - vim
+        - mc
+        - epel-release
+        - ca-certificates
+      state: present
 
 - name: "Install nginx"
-  hosts: apache
-  gather_facts: false
+  hosts: nginx
+  become: yes
+  gather_facts: true
+  tags:
+    - install_nginx
+  roles:
+    - nginx
+  vars:
+    username: "Netology"
+
+- name: "Install httpd"
+  hosts: httpd
   become: yes
   tags:
-    - files
+    - install_httpd
   roles:
-    - name: "Test"
-      role: modify_file
-      vars:
-        username: "Igor"
+    - httpd
+
 

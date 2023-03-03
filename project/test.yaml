@@ -1,0 +1,24 @@
+---
+- name: "Install packages"
+  hosts: nginx
+  gather_facts: false
+  become: yes
+  tags:
+    - packages
+  tasks:
+  - name: "Show current ip"
+    debug:
+      msg: "Hello, Netology!"
+
+- name: "Install nginx"
+  hosts: apache
+  gather_facts: false
+  become: yes
+  tags:
+    - files
+  roles:
+    - name: "Test"
+      role: modify_file
+      vars:
+        username: "Igor"
+

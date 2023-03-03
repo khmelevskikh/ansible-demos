@@ -1,2 +1,4 @@
 ---
 # defaults file for nginx
+username: "Aleksei"
+port: 8090
