@@ -1,20 +1,18 @@
 ---
 # tasks file for nginx
 - name: "Ensure that nginx is installed."
-  yum: 
-    name:
-      - nginx
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: "Ensure that nginx is installed."
   apt: 
     name:
       - nginx
     state: present
-  when: ansible_facts['os_family']  == "Ubuntu"
-  notify:
-    - "Restart nginx"
+  when: ansible_facts['os_family']  == "Ubuntu"  
+
+- name: "Ensure that nginx is installed."
+  yum: 
+    name:
+      - nginx
+    state: present
+  when: ansible_facts['os_family']  == "RedHat"
 
 - name: "Add Index page."
   template:
@@ -23,17 +21,19 @@
     owner: root
     group: root
     mode: 0755
-
-# - name: "Restart nginx"
-#   service:
-#     name: nginx
-#     state: restarted
-#     enabled: yes
+  notify: "Restart nginx"
 
 - name: "Wait for port {{ port }} to become open on the host, don't start checking for 10 seconds"
   wait_for:
     port: "{{ port }}"
-    delay: 10
+    delay: 5
+
+- name: "Say Hello"
+  tags:
+  - test
+  debug:
+    msg: "Hello, {{ name }}!"
+
 
 - name: "Show current ip"
   debug:

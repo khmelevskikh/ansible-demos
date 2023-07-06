@@ -1,13 +1,12 @@
 ---
 - name: "Install packages"
   hosts: webservers
-  become: true
-  gather_facts: false
+  become: yes
   tags:
-    - init
+  - init
   tasks:
 
-  - name: "Ensure that required packages are installed."
+  - name: "Ensure that required packages are installed"
     yum:
       name:
         - vim
@@ -16,23 +15,55 @@
         - ca-certificates
       state: present
 
-- name: "Install nginx"
+- name: "Install Nginx"
   hosts: nginx
-  become: yes
-  gather_facts: true
+  gather_facts: yes
   tags:
-    - install_nginx
+  - nginx
+  become: true
   roles:
-    - nginx
+  - name: nginx
+    vars:
+    - name: "Igor"
   vars:
-    username: "Netology"
+    name: "Playbook"
 
-- name: "Install httpd"
-  hosts: httpd
-  become: yes
+- name: "Install Caddy"
+  hosts: caddy
+  gather_facts: yes
   tags:
-    - install_httpd
+  - caddy
+  become: yes
   roles:
-    - httpd
+    - role: caddy_ansible
+      caddy_config: |
+        https://192.168.2.26
+        encode gzip
+        file_server browse {
+            root /home/caddy/
+        }
+
+# - name: "Install Nginx"
+#   hosts: nginx
+#   become: true
+#   tags:
+#   - nginx
+#   - everything
+#   gather_facts: true
+#   roles:
+#   - name: nginx
+#     vars:
+#     - name: "Igor"
+
+# - hosts: caddy
+#   become: yes
+#   roles:
+#     - role: caddy_ansible
+#       caddy_config: |
+#         https://192.168.2.25
+#         encode gzip
+#         file_server browse {
+#             root /home/caddy/
+#         }
 
 

@@ -1,13 +1,13 @@
 [webservers:children]
 nginx
-httpd
+caddy
+
+[nginx]
+192.168.2.23 ansible_ssh_user=vagrant 
+
+[caddy]
+192.168.2.26 ansible_ssh_user=vagrant 
 
 [dbservers]
 10.25.1.56
 10.25.1.57
-
-[nginx]
-192.168.2.13 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
-
-[httpd]
-192.168.2.14 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant

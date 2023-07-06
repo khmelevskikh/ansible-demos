@@ -4,12 +4,12 @@ all:
       children:
         nginx:
           hosts:
-            192.168.2.13:
+            192.168.2.23:
               ansible_ssh_user: vagrant
               ansible_ssh_pass: vagrant
-        httpd:
+        caddy:
           hosts:
-            192.168.2.14:
+            192.168.2.26:
               ansible_ssh_user: vagrant
               ansible_ssh_pass: vagrant
     dbservers:
